@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title> Currency Converter App By PK </title>
+		<style>
+			* { font-size:130%; }
+			h1 { background-color:black; color:white;
+				width:50%; border-radius:30px; }
+			body { background-color: lightyellow; }
+		</style>
+	
+		<script>
+			function convert()
+			{
+				event.preventDefault();	
+				let amt = document.getElementById("amt");
+				let ans = document.getElementById("ans");
+
+				let url = "https://api.exchangerate-api.com/v4/latest/USD";
+				fetch(url)
+				.then(res => res.json())
+				.then(data => {
+					let dollar = data["rates"]["INR"]
+					let res = amt.value * dollar
+					ans.innerHTML = res;
+				})
+				.catch(err => ans.innerHTML = "Issue" + err);
+			}
+		</script>
+	</head>
+
+	<body>
+		<center>
+			<h1> Live Currency Converter </h1>
+			<form onsubmit = "convert()">
+				<input type = "number" step = "any" placeholder = "Amount in Dollar" id = "amt" />
+				<br/><br/>
+				<input type = "submit" value = "Convert" />
+			</form>
+			<h1 id = "ans"> </h1>
+		</center>
+	</body>
+</html>
